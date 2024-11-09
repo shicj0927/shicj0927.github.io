@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>可视化二叉树</title>
+    <style>
+        #view {
+            position: relative;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+        }
+        .line {
+            fill: white;
+            stroke: black;
+            stroke-width: 2px;
+        }
+        #controls {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            width: 400px;
+            height: 100px;
+            border: 1px solid;
+            padding: 10px;
+            display: flex;
+            flex-flow: column;
+            place-items: center;
+            text-align: center;
+            z-index: 1;
+        }
+        .flex-row {
+            display: flex;
+            place-items: center;
+            flex: 1;
+            width: 100%;
+            gap: 5px;
+        }
+        .flex-row label {
+            flex: 1
+        }
+        .flex-row input {
+            flex: 3;
+        }
+        .flex-row button {
+            flex: 1
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <div class="flex-row">
+            <label for="arr">二叉树数组：</label>
+            <input id="arr" type="text" placeholder="输入以逗号分隔：1,2,null,4,5...">
+        </div>
+        <div class="flex-row">
+            <button>锁定</button>
+            <button>清空</button>
+            <button>缩小</button>
+            <button>增大</button>
+        </div>
+    </div>
+
+    <script>
+        function getMaxDepth(arr) {
+            if (!Array.isArray(arr) || !arr.length) return 0
+
+            const n = arr.length;
+            let p = 0,
+                num = 1,
+                maxDepth = 0;
+
+            while(num) {
+                maxDepth++;
+                const size = num;
+                for (let i=0; i<size; i++) {
+                    num--;
+                    if (++p < n && arr[p] !== null) num++;
+                    if (++p < n && arr[p] !== null) num++;
+                }
+
+            }
+            return maxDepth;
+        }
+
+        function drawTree(arr, maxDepth) {
+            let offsetY = 1.5 * 30 * Math.sqrt(3),
+                offsetX = 1.5 * 30 << (maxDepth-1);
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.id = 'view';
+
+            const viewWidth = offsetX << 1;
+            const viewHeight = 90 + offsetY * (maxDepth - 1);
+            svg.setAttribute('width', viewWidth.toString());
+            svg.setAttribute('height', viewHeight.toString());
+
+            svg.style.left = viewWidth > window.innerWidth ? (viewWidth >> 1).toString() : '50%'
+
+            const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            svg.append(group);
+
+            class Node {
+                constructor(val, nodeType, cx, cy) {
+                    this.val = val;
+                    this.nodeType = nodeType;
+                    this.cx = cx;
+                    this.cy = cy;
+                }
+
+            }
+            let cur = 0,
+                node = new Node(arr[0], 0, viewWidth >> 1, 45),
+                nodeType = 0,
+                cx = 0,
+                cy = 0;
+            const queue = [node],
+                n = arr.length;
+
+            while (queue.length) {
+                const len = queue.length;
+                for (let i=0; i<len; i++) {
+                    node = queue.shift();
+                    nodeType = node.nodeType;
+                    cx = node.cx;
+                    cy = node.cy;
+
+                    if (nodeType !== 0) {
+                        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        if (nodeType === 1) {
+                            line.setAttribute('x1', cx.toString());
+                            line.setAttribute('x2', (cx + offsetX).toString());
+                        } else {
+                            line.setAttribute('x1', cx.toString());
+                            line.setAttribute('x2', (cx - offsetX).toString());
+                        }
+                        line.setAttribute('y1', cy.toString());
+                        line.setAttribute('y2', (cy - offsetY).toString());
+
+                        line.classList.add('line');
+                        group.append(line);
+                    }
+
+                    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', cx.toString());
+                    circle.setAttribute('cy', cy.toString());
+                    circle.setAttribute('r', '30');
+                    circle.classList.add('line');
+
+                    const num = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    const str = node.val.toString();
+                    num.innerHTML = str;
+                    const resize = 3 / Math.max(3, str.length);
+                    num.setAttribute('x', (cx - (9 * str.length) * resize).toString());
+                    num.setAttribute('y', (cy + 10 * resize).toString());
+                    num.setAttribute('font-size', (30 * resize).toString());
+
+                    svg.append(circle, num);
+
+                    if (++cur < n && arr[cur] !== null) {
+                        queue.push(new Node(arr[cur], 1, cx-(offsetX>>1), cy+offsetY));
+                    }
+                    if (++cur < n && arr[cur] !== null) {
+                        queue.push(new Node(arr[cur], 2, cx+(offsetX>>1), cy+offsetY));
+                    }
+                }
+
+                offsetX >>= 1;
+            }
+
+            document.body.append(svg);
+        }
+
+        const inputs = document.querySelector('input');
+        const [lockBtn, clearBtn, shrinkBtn, enlargeBtn] = document.querySelectorAll('button');
+
+
+        let view;
+        let isLocked = false;
+        lockBtn.onclick = function () {
+            isLocked = !isLocked;
+            lockBtn.innerText = isLocked ? '解锁' : '锁定';
+        }
+
+        function updateView() {
+            view.style.transform = `translate(calc(-50% + ${x}px), calc(${ratio*5-50}% + ${y}px)) scale(${ratio/10})`;
+        }
+
+        // 保存上次状态，减少重构量
+        let tmp = [];
+        function draw() {
+            if (inputs.value === '' || isLocked) return
+            const data = inputs.value.replace(/，/g, ',').split(',');
+
+            let isChanged = false;
+            data.forEach((str, i) => {
+                let res = parseInt(str, 10);
+                if (Number.isNaN(res)) res = null;
+                data[i] = res;
+                // 排除末尾仅添加，的情况
+                if (!isChanged && data[i] !== tmp[i] &&
+                    !(i === data.length-1 && str === '' && data.length > tmp.length)) isChanged = true;
+            })
+            if (!isChanged || data[0] === null) return;
+
+            tmp = data;
+            if (view) view.remove();
+
+            drawTree(data, getMaxDepth(data));
+            view = document.getElementById('view');
+            updateView();
+            view.style.cursor = 'pointer';
+            bindEvents(view);
+        }
+
+        inputs.addEventListener('keyup', draw);
+
+        clearBtn.onclick = function () {
+            inputs.value = '';
+            if (view) view.remove();
+        }
+
+        let ratio = 10,
+            x = 0,
+            y = 0;
+
+        function shrink() {
+            if (!view || ratio <= 1) return
+            ratio -= 1;
+            updateView();
+            enlargeBtn.disabled = false;
+            if (ratio === 1) shrinkBtn.disabled = true;
+        }
+
+        function enlarge() {
+            if (!view || ratio >= 20) return
+            ratio += 1;
+            updateView();
+            shrinkBtn.disabled = false;
+            if (ratio === 20) enlargeBtn.disabled = true;
+        }
+
+        shrinkBtn.onclick = shrink;
+        enlargeBtn.onclick = enlarge;
+
+        function bindEvents(svg) {
+            let isDragging = false,
+                isLimiting = false,
+                preX, preY;
+
+            function move(e) {
+                if (!isDragging || isLimiting) return
+                isLimiting = true;
+
+                x += e.clientX - preX;
+                y += e.clientY - preY;
+                updateView();
+
+                preX = e.clientX;
+                preY = e.clientY;
+                window.requestAnimationFrame(() => isLimiting = false);
+            }
+
+            svg.addEventListener('mousedown', e => {
+                isDragging = true;
+                preX = e.clientX;
+                preY = e.clientY;
+                e.preventDefault();
+            });
+            svg.addEventListener('mousemove', move);
+            document.addEventListener('mouseup', () => isDragging = false);
+
+            svg.addEventListener('wheel', e => {
+                if (e.deltaY < 0) enlarge();
+                else shrink();
+            })
+        }
+
+    </script>
+</body>
+</html>
