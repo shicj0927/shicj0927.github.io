@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <script src="vditor.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js" defer></script>
+
+</head>
+<body>
+
+<div class="wrapper">
+  <h1>vditor</h1>
+    <div class="fn-50"></div>
+    <div id="app">
+        <div id="vditor"></div>
+    </div>
+    <div class="fn-50"></div>
+    <div class="fn-100"></div>
+    <a>提示：行间公式的$左右要留空格，否则无法渲染</a>
+    <hr>
+    <a>开源项目：https://github.com/Vanessa219/vditor</a>
+</div>
+<!-- end main -->
+
+
+<script>
+  vditorScript = () => {
+    new Vue({
+      el: '#app',
+      data: {
+        contentEditor: '',
+      },
+      mounted () {
+        this.contentEditor = new Vditor('vditor', {
+          height: 360,
+          toolbarConfig: {
+            pin: true,
+          },
+          cache: {
+            enable: false,
+          },
+          after: () => {
+            this.contentEditor.setValue('hello, Vditor + Vue!')
+          },
+        })
+      },
+    })
+  }
+</script>
+</body>
+</html>

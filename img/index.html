@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>shicj的图片存档</title>
+</head>
+<body>
+	<center>
+		<h1>shicj的图片存档</h1>	
+		<hr>
+		<table>
+			<tr>
+				<td><a style="text-align: right;">图片名称</a></td>
+				<td><a>：</a></td>
+				<td><input type="text" id="name" name="name" required>
+				<input type="submit" onclick="console.log('123');getElementById('imglink').innerHTML='http://shicj0927.github.io/img/upload/'+document.getElementById('name').value;getElementById('showimg').src='upload/'+document.getElementById('name').value;" value="前往"></td>
+			</tr>
+			<tr>
+				<td><a style="text-align: right;">图片链接</a></td>
+				<td><a>：</a></td>
+				<td><a id="imglink">请输入有效名称</a></td>
+			</tr>
+		</table>
+		<img id="showimg" src="imgview.png">
+		<hr>
+		<a>by shicj</a>
+	</center>
+</body>
+</html>
