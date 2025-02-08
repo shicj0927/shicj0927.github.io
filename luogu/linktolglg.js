@@ -1,10 +1,14 @@
 // ==UserScript==
 // @name         Link to lglg.top
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  用lglg.top打开洛谷灌水区链接
 // @author       shicj
-// @match        https://www.luogu.com.cn/*
+// @match        https://www.luogu.com.cn/discuss?forum=problem
+// @match        https://www.luogu.com.cn/discuss?forum=academics
+// @match        https://www.luogu.com.cn/discuss?forum=relevantaffairs
+// @match        https://www.luogu.com.cn/discuss?forum=service
+// @match        https://www.luogu.com.cn/discuss?forum=P*
 // @grant        none
 // ==/UserScript==
 
