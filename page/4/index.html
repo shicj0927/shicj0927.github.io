@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>shicj's blog</title><meta name="author" content="shicj"><meta name="copyright" content="shicj"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="shicj&#39;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="shicj&#39;s blog">
+<meta property="og:url" content="https://shicj.pages.dev/page/4/index.html">
+<meta property="og:site_name" content="shicj&#39;s blog">
+<meta property="og:description" content="shicj&#39;s blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:author" content="shicj">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://shicj.pages.dev/page/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.3.3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'shicj\'s blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/myself/"><i class="fa-fw fas fa-heart"></i><span> 我</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/et/"><span> 元素周期表</span></a></li><li><a class="site-page child" href="/grades/"><span> 成绩单</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/markdown/"><span> MarkDown编辑器</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://easyleetcode.pages.dev/"><span> Leetcode工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/files/"><i class="fa-fw fas fa-folder-open"></i><span> 资料库</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/upload/bk.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">shicj's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/myself/"><i class="fa-fw fas fa-heart"></i><span> 我</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/et/"><span> 元素周期表</span></a></li><li><a class="site-page child" href="/grades/"><span> 成绩单</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/markdown/"><span> MarkDown编辑器</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://easyleetcode.pages.dev/"><span> Leetcode工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/files/"><i class="fa-fw fas fa-folder-open"></i><span> 资料库</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">shicj's blog</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/25/CF2001C%20Guess%20The%20Tree%20%E9%A2%98%E8%A7%A3/" title="CF2001C Guess The Tree 题解">CF2001C Guess The Tree 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-25T12:32:00.000Z" title="发表于 2024-08-25 20:32:00">2024-08-25</time></span></div><div class="content">0x00 题目翻译 一棵有 nnn 个节点的秘密树，索引从 111 到 nnn ，并要求你使用以下类型的查询来猜测它：  “? a b” - Misuki 会告诉你哪个节点 xxx 使 ∣d(a,x)−d(b,x)∣|d(a,x) - d(b,x)|∣d(a,x)−d(b,x)∣ 最小，其中 d(x,y)d(x,y)d(x,y) 是节点 xxx 和 yyy 之间的距离。如果存在多个这样的节点，那么 Misuki 会告诉你哪个节点能使 d(a,x)d(a,x)d(a,x) 最小化。  用最多 15n15n15n 次查询找出秘密树的结构！ 0x01 解题思路 由距离差最小值，想到中点，由 15n15n15n 次查询，想到 O(nlog⁡n)O(n\log n)O(nlogn)，于是自然想到类似二分的思想。 什么时候可以确定一条边呢？当我们查询到两个相邻节点（中间有边）时，答案必定是这两个节点中的一个。反推，如果查询到答案是传入的两个点中的一个，这两个点中间有一条边。 这是只需要以 (n−1)×log⁡n(n-1)\times\log n(n−1)×logn 次查询，确定...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/23/CF1980E%20Permutation%20of%20Rows%20and%20Columns%20%E9%A2%98%E8%A7%A3/" title="CF1980E Permutation of Rows and Columns 题解">CF1980E Permutation of Rows and Columns 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-23T08:25:00.000Z" title="发表于 2024-08-23 16:25:00">2024-08-23</time></span></div><div class="content">我认为这题应该评黄。 0x00 题目大意 给你一个 n×mn\times mn×m 矩阵，里面元素构成排列，你可以交换任意一列任意一行，求任意次操作后两个矩阵能否相同。 0x01 解题思路 看到题面，可能没有什么思路，我们来按题目模拟一下。 设原始矩阵为： (a1,1a1,2⋯a1,ma2,1a2,2⋯a2,m⋮⋮⋱⋮an,1an,2⋯an,m)  \begin{pmatrix}  a_{1,1} &amp; a_{1,2} &amp; \cdots &amp; a_{1,m} \\ a_{2,1} &amp; a_{2,2} &amp; \cdots &amp; a_{2,m} \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ a_{n,1} &amp; a_{n,2} &amp; \cdots &amp; a_{n,m}\\ \end{pmatrix} ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/19/2024%E7%B4%A0%E5%85%BB%E5%A4%A7%E8%B5%9B%E9%A2%98%E7%9B%AE/" title="2024素养大赛题目">2024素养大赛题目</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-19T02:48:11.000Z" title="发表于 2024-08-19 10:48:11">2024-08-19</time></span></div><div class="content">A 给定 a,b,ca,b,ca,b,c，输出从 aaa 时 bbb 分到 aaa 时 ccc 分的所有时间。 样例输入 119 10 15 样例输出 12345619 1019 1119 1219 1319 1419 15 B 有 nnn 根绳子，每根长 aia_iai​，现在可以拼接相邻的几根绳子为一根，要求最终拼出的每根绳子长度都不超过 mmm，求最终最少合并出多少根。 样例输入 124 61 3 4 2 样例输出 12 C 有 nnn 个学生，输入每个学生的 ididid 和成绩，有 qqq 次查询，输入一个 ididid，输出对应的成绩。 样例输入 1234567841 9023 10044 605 952231 样例输出 1210090 D 输入一个字符串，去除里面的元音字母（a,e,i,o,ua,e,i,o,ua,e,i,o,u），输出。 样例输入 1helloworld 样例输出 1hllwrld E 有 nnn 堆火柴，每堆 aia_iai​ 个，现在两人轮流，每次在一堆中取出若干火柴，率先取完者获胜，求是否有先手必胜策略。 样例输入1 1222...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/12/%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%A8%A1%E6%9D%BF/" title="线段树模板">线段树模板</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-12T06:49:00.000Z" title="发表于 2024-08-12 14:49:00">2024-08-12</time></span></div><div class="content">通过简单修改自定义内容，可实现区间加减乘除，max，min，取反以及其他功能，但暂时无法实现多操作（因为tag处理顺序不确定，要自己写）    对象 类型 说明     typename T 参数 线段树的数据类型   stduct node 内部 定义了l，r，v，tag   T dat[] 参数 线段树的原始序列   void pushup(int x) 内部 pushup   void build(int x,int l,int r) 函数 初始化，传入1,1,n   void pushdown(int x) 内部 pushdown   void update(int x,int L,int R,T v) 函数 更新，传入(1,l,r,v)   T  query(int x,int L,int R) 函数 查询，传入(1,l,r)   T op(int x,int y) 自定义 pushup的操作符   T q_op(int x,int y) 自定义 query的操作符   T tot_init 自定义 query累计变量初始值   void apply(int x,T...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/12/P10867%20%5BHBCPC2024%5D%20Points%20on%20the%20Number%20Axis%20A%20%E9%A2%98%E8%A7%A3/" title="P10867 [HBCPC2024] Points on the Number Axis A 题解">P10867 [HBCPC2024] Points on the Number Axis A 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-12T00:56:00.000Z" title="发表于 2024-08-12 08:56:00">2024-08-12</time></span></div><div class="content">0x00 题目翻译 最初数轴上由 nnn 个点 x1,x2,x3,…,xnx_1,x_2,x_3,\dots,x_nx1​,x2​,x3​,…,xn​，每次随机取两个，把它们拿走后再把它们的平均数 xi+xj2\dfrac{x_i+x_j}{2}2xi​+xj​​ 放回数轴，最后剩下一个点，求这个点坐标的期望。 0x01 解题思路 1. 猜想结论 ansn=∑i=1nainans_n=\dfrac{\sum_{i=1}^{n}a_i}{n} ansn​=n∑i=1n​ai​​ 2. proof 3.对输出的处理 要求输出 p×q−1p\times q^{-1}p×q−1，这里我们需要用乘法逆元。 显而易见 998244353998244353998244353 是质数，乘法逆元可以通过 q998244353−2q^{998244353-2}q998244353−2 得到，需要快速幂。 0x02 AC...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/12/P10862%20%5BHBCPC2024%5D%20Spicy%20or%20Grilled%20%E9%A2%98%E8%A7%A3/" title="P10862 [HBCPC2024] Spicy or Grilled? 题解">P10862 [HBCPC2024] Spicy or Grilled? 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-12T00:50:00.000Z" title="发表于 2024-08-12 08:50:00">2024-08-12</time></span></div><div class="content">这是本场比赛的签到题。 0x00 题目大意 共 nnn 个人，xxx 个人选择价格 bbb 的汉堡，剩余人选择价格 aaa 的，求总价。 0x00 解题思路 由小学数学得到： ans=a×(n−x)+b×xans=a\times (n-x)+b\times x ans=a×(n−x)+b×x 别的没什么好说的 0x02 AC Code 123456789101112131415#include&lt;bits/stdc++.h&gt;using namespace std;void solve()&#123;    int n,x,a,b;    cin&gt;&gt;n&gt;&gt;x&gt;&gt;a&gt;&gt;b;    cout&lt;&lt;a*(n-x)+b*x&lt;&lt;endl;&#125;int main()&#123;    int t;    cin&gt;&gt;t;    while(t--)&#123;        solve();    &#125;    return 0;&#125;</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/12/P10859%20%5BHBCPC2024%5D%20Nana%20Likes%20Polygons%20%E9%A2%98%E8%A7%A3/" title="P10859 [HBCPC2024] Nana Likes Polygons 题解">P10859 [HBCPC2024] Nana Likes Polygons 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-12T00:44:00.000Z" title="发表于 2024-08-12 08:44:00">2024-08-12</time></span></div><div class="content">0x00 题目大意 给出平面上一些点，求以这些点的子集为顶点组成的凸多边形的面积的最小值。 0x01 解题思路 易证，最终的图形一定是一个三角形（如果是更多边形，必然可以削掉一块使得面积更小）。 看到数据范围：1≤n≤1001\le n\le 1001≤n≤100，完全可以 O(n3)O(n^3)O(n3) 枚举三角形，求最小面积。 如何求三角形面积？可以用这个公式： SΔABC=∣A.x×B.y+B.x×C.y+C.x×A.y−A.x×C.y−B.x×A.y−C.x×B.y∣2S_{\Delta ABC}=\dfrac{|A.x\times B.y+B.x\times C.y+C.x\times A.y-A.x\times C.y-B.x\times A.y-C.x\times B.y|}{2} SΔABC​=2∣A.x×B.y+B.x×C.y+C.x×A.y−A.x×C.y−B.x×A.y−C.x×B.y∣​ tips：不要用海伦公式，精度会炸。 如果三角形面积为 000，则说明当前三个点构不成三角形，如果所有组合面积都为 000，则无解。 0x02 AC...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/12/P10858%20%5BHBCPC2024%5D%20Long%20Live%20%E9%A2%98%E8%A7%A3/" title="P10858 [HBCPC2024] Long Live 题解">P10858 [HBCPC2024] Long Live 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-12T00:33:00.000Z" title="发表于 2024-08-12 08:33:00">2024-08-12</time></span></div><div class="content">0x00 题目大意 对于两个给定的正整数 xxx 和 yyy，找到另两个整数 aaa 和 bbb 满足： lcm⁡(x,y)gcd⁡(x,y)=ab\sqrt{\dfrac{\operatorname{lcm}(x,y)}{\gcd(x,y)}}=a\sqrt{b} gcd(x,y)lcm(x,y)​​=ab​ 求当 a×ba\times ba×b 最小时 aaa 和 bbb 的值。 0x01 解题思路 求出 lcm⁡(x,y)gcd⁡(x,y)=k\dfrac{\operatorname{lcm}(x,y)}{\gcd(x,y)}=kgcd(x,y)lcm(x,y)​=k，代入原式： k=ab\sqrt{k}=a\sqrt{b} k​=ab​ 左右平方： k=a2bk=a^2b k=a2b 此时要使得 ababab 最小，则要使得 aaa 最小（a2b=a(ab)a^2b=a(ab)a2b=a(ab)），故直接令 a=1a=1a=1 即可得最优答案。 0x02 AC...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/08/04/%E7%BD%91%E7%BB%9C%E6%B5%81/" title="网络流">网络流</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-08-04T06:42:00.000Z" title="发表于 2024-08-04 14:42:00">2024-08-04</time></span></div><div class="content">详细的解析 解决vector问题 最小割=最大流 技巧：连+inf的边 Dinic code 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960int n,m,s,t;struct edge&#123;    int v,w,r;&#125;;vector&lt;edge&gt;G[10001];bool vis[10001];int d[10001],p[10001];bool bfs()&#123;    memset(d,-1,sizeof(d));    memset(vis,0,sizeof(vis));    queue&lt;int&gt;q;    q.push(s);    vis[s]=true;    d[s]=1;    while(!q.empty())&#123;        int u=q.front();        q.pop();        for(auto...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/07/26/CF1970C2%20Game%20on%20Tree%20(Medium)%20%E9%A2%98%E8%A7%A3/" title="CF1970C2 Game on Tree (Medium) 题解">CF1970C2 Game on Tree (Medium) 题解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-07-26T14:22:00.000Z" title="发表于 2024-07-26 22:22:00">2024-07-26</time></span></div><div class="content">0x00 题目大意 给出一棵树，在一个点上放一个棋子，两人轮流移动棋子到相邻位置，不可重复经过某个点，两人决策最优，问谁获胜。 0x01 初步分析 看一下样例，画个图分析一下：  然后看一下可以怎样移动：  发现每一条路径都去往叶子节点，显而易见，每个叶子节点的状态是确定的：  这个状态可以很快求出，接下来研究如何向上转移。 0x02 深入分析 由于叶子节点状态已知，所以考虑自底向上分析。 在这里，每一个节点上由谁选择（移到下一个点）很重要，我们用绿色字体标出每个节点上由谁选择：  可以看出，由谁选择取决于节点的深度。 易得，在最优决策中，总是要选择可以使得自己获胜的点，如果没有，则在这一点上出发对方获胜，否则自己获胜。 于是可以自底向上标出每一个点上的获胜者：  这时看一看起始节点上谁获胜就行了。 0x03 具体实现 在代码中，可以如图中用字符表示状态（这样直观但代码量大），但更推荐用布尔值来实现，这样可以把判断获胜者的运算转化为深度模 222 和逻辑运算，具体的写法可以自己琢磨。 求获胜者的步骤可以直接写在搜索的回溯部分，这样便于实现。 0x04...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/5/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">shicj</div><div class="author-info-description">shicj's blog</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/shicj0927"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">迁移洛谷专栏文章</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/19/CF1481D%20AB%20Graph%20%E9%A2%98%E8%A7%A3/" title="CF1481D AB Graph 题解">CF1481D AB Graph 题解</a><time datetime="2025-03-19T14:22:00.000Z" title="发表于 2025-03-19 22:22:00">2025-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/18/CF1487E%20Cheap%20Dinner%20%E9%A2%98%E8%A7%A3/" title="CF1487E Cheap Dinner 题解">CF1487E Cheap Dinner 题解</a><time datetime="2025-03-18T14:16:00.000Z" title="发表于 2025-03-18 22:16:00">2025-03-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/03/06/CF1638D%20Big%20Brush%20%E9%A2%98%E8%A7%A3/" title="CF1638D Big Brush 题解">CF1638D Big Brush 题解</a><time datetime="2025-03-06T07:31:00.000Z" title="发表于 2025-03-06 15:31:00">2025-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/12/CF2062E1%20The%20Game%20(Easy%20Version)%20%E9%A2%98%E8%A7%A3/" title="CF2062E1 The Game (Easy Version) 题解">CF2062E1 The Game (Easy Version) 题解</a><time datetime="2025-02-12T13:27:00.000Z" title="发表于 2025-02-12 21:27:00">2025-02-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/10/SuperHacker/" title="SuperHacker">SuperHacker</a><time datetime="2025-02-10T05:52:00.000Z" title="发表于 2025-02-10 13:52:00">2025-02-10</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E8%AF%AD%E6%96%87/" style="font-size: 1.1em; color: #999">语文</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.3em; color: #99a1ac">算法</a> <a href="/tags/%E6%AF%94%E8%B5%9B/" style="font-size: 1.2em; color: #999da3">比赛</a> <a href="/tags/%E9%A2%98%E8%A7%A3/" style="font-size: 1.5em; color: #99a9bf">题解</a> <a href="/tags/%E7%A7%91%E5%AD%A6/" style="font-size: 1.1em; color: #999">科学</a> <a href="/tags/%E7%A4%BE%E4%BC%9A/" style="font-size: 1.3em; color: #99a1ac">社会</a> <a href="/tags/%E9%AB%98%E4%B8%AD%E6%95%B0%E5%AD%A6/" style="font-size: 1.4em; color: #99a5b6">高中数学</a> <a href="/tags/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" style="font-size: 1.1em; color: #999">组合数学</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 1.1em; color: #999">项目</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/01/">
+            <span class="card-archive-list-date">
+              一月 2025
+            </span>
+            <span class="card-archive-list-count">8</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/12/">
+            <span class="card-archive-list-date">
+              十二月 2024
+            </span>
+            <span class="card-archive-list-count">5</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/10/">
+            <span class="card-archive-list-date">
+              十月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/09/">
+            <span class="card-archive-list-date">
+              九月 2024
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">9</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">50</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-03-23T01:00:22.589Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By shicj</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.3.3"></script><script src="/js/main.js?v=5.3.3"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (false) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  if (false) {
+    typedJSFn.init(["Hello world!"])
+  } else {
+    document.getElementById("subtitle").textContent = "Hello world!"
+  }
+}
+typedJSFn.run(subtitleType)</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
