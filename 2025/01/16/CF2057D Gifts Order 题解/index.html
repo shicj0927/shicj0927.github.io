@@ -232,9 +232,9 @@ ans_{2_\text{now}}=\max\{ans_{2_l},ans_{2_r},y_{r_\text{max}}-y_{2_\text{max}}\}
     const gitalk = new Gitalk({
       clientID: '',
       clientSecret: '',
-      repo: '',
-      owner: '',
-      admin: [''],
+      repo: 'blogc',
+      owner: 'shicj0927',
+      admin: ['shicj0927'],
       updateCountCallback: commentCount,
       ...option,
       id: isShuoshuo ? path : (option && option.id) || '69e432208e33021ffcd5dc5d7f4d8f40'
@@ -247,7 +247,7 @@ ans_{2_\text{now}}=\max\{ans_{2_l},ans_{2_r},y_{r_\text{max}}-y_{2_\text{max}}\}
     if (typeof Gitalk === 'function') initGitalk(el, path)
     else {
       await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
-      await btf.getScript('/%5Bobject%20Object%5D')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
       initGitalk(el, path)
     }
   }

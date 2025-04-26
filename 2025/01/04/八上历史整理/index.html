@@ -792,9 +792,9 @@
     const gitalk = new Gitalk({
       clientID: '',
       clientSecret: '',
-      repo: '',
-      owner: '',
-      admin: [''],
+      repo: 'blogc',
+      owner: 'shicj0927',
+      admin: ['shicj0927'],
       updateCountCallback: commentCount,
       ...option,
       id: isShuoshuo ? path : (option && option.id) || 'c5ea731d4c52552c86ef900bd050a431'
@@ -807,7 +807,7 @@
     if (typeof Gitalk === 'function') initGitalk(el, path)
     else {
       await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
-      await btf.getScript('/%5Bobject%20Object%5D')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
       initGitalk(el, path)
     }
   }

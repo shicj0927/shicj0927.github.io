@@ -224,9 +224,9 @@ a_{x_n,y_1} &amp; a_{x_n,y_2} &amp; \cdots &amp; a_{x_n,y_m}\\
     const gitalk = new Gitalk({
       clientID: '',
       clientSecret: '',
-      repo: '',
-      owner: '',
-      admin: [''],
+      repo: 'blogc',
+      owner: 'shicj0927',
+      admin: ['shicj0927'],
       updateCountCallback: commentCount,
       ...option,
       id: isShuoshuo ? path : (option && option.id) || '5453565b626d3a2bc4f50d0c432fa2d0'
@@ -239,7 +239,7 @@ a_{x_n,y_1} &amp; a_{x_n,y_2} &amp; \cdots &amp; a_{x_n,y_m}\\
     if (typeof Gitalk === 'function') initGitalk(el, path)
     else {
       await btf.getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
-      await btf.getScript('/%5Bobject%20Object%5D')
+      await btf.getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
       initGitalk(el, path)
     }
   }
