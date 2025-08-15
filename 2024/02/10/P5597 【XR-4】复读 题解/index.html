@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://cdn.luogu.com.cn/upload/image_hosting/lnezi8rk.png">
 <meta property="og:image" content="https://cdn.luogu.com.cn/upload/image_hosting/r5kxhbon.png">
 <meta property="article:published_time" content="2024-02-10T12:20:00.000Z">
-<meta property="article:modified_time" content="2025-03-09T12:29:38.000Z">
+<meta property="article:modified_time" content="2025-08-15T11:29:05.238Z">
 <meta property="article:author" content="shicj">
 <meta property="article:tag" content="题解">
 <meta name="twitter:card" content="summary_large_image">
@@ -187,6 +187,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/files/" target="_self">
+                <i class="iconfont icon-books"></i>
+                <span>资料库</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -210,7 +222,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bk1.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -324,12 +336,34 @@
 </ul>
 <h1>代码实现</h1>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> maxn=<span class="hljs-number">2e3</span><span class="hljs-number">+100</span>;<br><span class="hljs-type">int</span> n,l[maxn],r[maxn];<br><span class="hljs-type">int</span> tmp_l[maxn],tmp_r[maxn];<br><span class="hljs-comment">//tmp_l[],tmp_r[]是合并后的图</span><br><span class="hljs-type">int</span> sum,cur,ans=<span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-comment">//sum是一个拆分中的答案</span><br><span class="hljs-comment">//cur在后面作为每一部分的终点</span><br><span class="hljs-comment">//ans是总答案</span><br><span class="hljs-type">char</span> p[maxn];<br><span class="hljs-comment">//保存拆分路径</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">read</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-comment">//根据前序遍历建树</span><br>	<span class="hljs-type">char</span> tmp;<br>	<span class="hljs-type">int</span> now;<br>	cin&gt;&gt;tmp;<br>	n++;<br>	now=n;<br>	<span class="hljs-keyword">if</span>(tmp==<span class="hljs-string">&#x27;1&#x27;</span>||tmp==<span class="hljs-string">&#x27;3&#x27;</span>)<br>		l[now]=<span class="hljs-built_in">read</span>();<br>	<span class="hljs-keyword">if</span>(tmp==<span class="hljs-string">&#x27;2&#x27;</span>||tmp==<span class="hljs-string">&#x27;3&#x27;</span>)<br>		r[now]=<span class="hljs-built_in">read</span>();<br>	<span class="hljs-keyword">return</span> now;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge</span><span class="hljs-params">(<span class="hljs-type">int</span> &amp;x,<span class="hljs-type">int</span> y)</span></span>&#123;<br>	<span class="hljs-comment">//合并各个部分</span><br>	<span class="hljs-keyword">if</span>(x==<span class="hljs-number">0</span>)sum++,x=sum;<br>	<span class="hljs-comment">//新建一个点</span><br>	<span class="hljs-keyword">if</span>(y==cur)<span class="hljs-keyword">return</span>;<br>	<span class="hljs-comment">//到达这部分终点，退出</span><br>	<span class="hljs-keyword">if</span>(l[y]!=<span class="hljs-number">0</span>)<span class="hljs-built_in">merge</span>(tmp_l[x],l[y]);<br>	<span class="hljs-keyword">if</span>(r[y]!=<span class="hljs-number">0</span>)<span class="hljs-built_in">merge</span>(tmp_r[x],r[y]);<br>	<span class="hljs-comment">//合并左右子树</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-type">int</span> u,<span class="hljs-type">int</span> d)</span></span>&#123;<br>	<span class="hljs-comment">//u是当前部分的结束位置的下一个位置</span><br>	<span class="hljs-comment">//d是当前部分的长度</span><br>	<span class="hljs-keyword">if</span>(u!=<span class="hljs-number">1</span>)&#123;<br>		<span class="hljs-built_in">memset</span>(tmp_l,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(tmp_l));<br>		<span class="hljs-built_in">memset</span>(tmp_r,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(tmp_r));<br>		<span class="hljs-comment">//清空</span><br>		sum=<span class="hljs-number">1</span>;<br>		<span class="hljs-comment">//开始时只有根节点</span><br>		cur=<span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">while</span>(cur)&#123;<br>			<span class="hljs-type">int</span> t=cur;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;d;i++)&#123;<br>				cur=(p[i]==<span class="hljs-string">&#x27;l&#x27;</span>?l[cur]:r[cur]);<br>				<span class="hljs-comment">//按照路径找终点</span><br>			&#125;<br>			<span class="hljs-type">int</span> tmp_x=<span class="hljs-number">1</span>;<br>			<span class="hljs-built_in">merge</span>(tmp_x,t);<br>			<span class="hljs-comment">//合并树，求sum</span><br>		&#125;<br>		ans=<span class="hljs-built_in">min</span>(ans,(sum<span class="hljs-number">-1</span>)*<span class="hljs-number">2</span>-d);<br>		<span class="hljs-comment">//记下答案</span><br>	&#125;<br>	p[d]=<span class="hljs-string">&#x27;l&#x27;</span>;<br>	<span class="hljs-keyword">if</span>(l[u])<br>		<span class="hljs-built_in">solve</span>(l[u],d<span class="hljs-number">+1</span>);<br>	<span class="hljs-comment">//递归向左子树扩展路径</span><br>	p[d]=<span class="hljs-string">&#x27;r&#x27;</span>;<br>	<span class="hljs-keyword">if</span>(r[u])<br>		<span class="hljs-built_in">solve</span>(r[u],d<span class="hljs-number">+1</span>);<br>	<span class="hljs-comment">//递归向右子树扩展路径</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-built_in">read</span>();<br>	<span class="hljs-built_in">solve</span>(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>);<br>	cout&lt;&lt;ans&lt;&lt;endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">

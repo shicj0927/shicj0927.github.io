@@ -27,7 +27,7 @@
 <meta property="og:description" content="0x00 题目大意 对于两个给定的正整数 xxx 和 yyy，找到另两个整数 aaa 和 bbb 满足： lcm⁡(x,y)gcd⁡(x,y)&#x3D;ab\sqrt{\dfrac{\operatorname{lcm}(x,y)}{\gcd(x,y)}}&#x3D;a\sqrt{b} gcd(x,y)lcm(x,y)​​&#x3D;ab​ 求当 a×ba\times ba×b 最小时 aaa 和 bbb 的值。 0x01 解">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-12T00:33:00.000Z">
-<meta property="article:modified_time" content="2025-03-23T08:27:04.000Z">
+<meta property="article:modified_time" content="2025-08-15T11:29:23.791Z">
 <meta property="article:author" content="shicj">
 <meta property="article:tag" content="题解">
 <meta name="twitter:card" content="summary_large_image">
@@ -184,6 +184,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/files/" target="_self">
+                <i class="iconfont icon-books"></i>
+                <span>资料库</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -207,7 +219,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bk1.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -344,12 +356,34 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
 <p>此时要使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>b</mi></mrow><annotation encoding="application/x-tex">ab</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">ab</span></span></span></span> 最小，则要使得 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span> 最小（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mi>b</mi><mo>=</mo><mi>a</mi><mo stretchy="false">(</mo><mi>a</mi><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a^2b=a(ab)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">a</span><span class="mopen">(</span><span class="mord mathnormal">ab</span><span class="mclose">)</span></span></span></span>），故直接令 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> 即可得最优答案。</p>
 <h2 id="0x02-AC-Code">0x02 AC Code</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> int long long</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> x,y;<br>    cin&gt;&gt;x&gt;&gt;y;<br>    <span class="hljs-type">int</span> ans=x*y/__gcd(x,y)/__gcd(x,y);<br>    cout&lt;&lt;<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-string">&quot; &quot;</span>&lt;&lt;ans&lt;&lt;endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> t;<br>    cin&gt;&gt;t;<br>    <span class="hljs-keyword">while</span>(t--)&#123;<br>        <span class="hljs-built_in">solve</span>();<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">

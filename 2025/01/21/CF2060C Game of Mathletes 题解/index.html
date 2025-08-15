@@ -27,7 +27,7 @@
 <meta property="og:description" content="每一轮，Alice 先取数，Bob 后取，当两人所取的和为 kkk 时，加一分，Alice 希望的分最小，Bob 希望最大，两人按最优方式操作，求最终得分。 当两个数的和等于 kkk 时，这一对数就是可得分的，可以发现，Alice 的取数方法与结果无关，而对于 Alice 的数，当这个数可得分时，Bob 会取出对应的一个数使之得分，否则 Bob 则取出一个不可得分的数，没有得分。 于是，答案就是可">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-21T13:32:00.000Z">
-<meta property="article:modified_time" content="2025-03-23T08:43:44.000Z">
+<meta property="article:modified_time" content="2025-08-15T11:28:46.790Z">
 <meta property="article:author" content="shicj">
 <meta property="article:tag" content="题解">
 <meta name="twitter:card" content="summary_large_image">
@@ -184,6 +184,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/files/" target="_self">
+                <i class="iconfont icon-books"></i>
+                <span>资料库</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -207,7 +219,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bk1.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -294,12 +306,34 @@
 <p>于是，答案就是可得分数组合的数量（当然每个数只能用一次）。</p>
 <p>于是就有了一个用映射维护的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">10</span></span></span></span> 行写法，注意 <code>tot</code> 不要改为数组，否则可能会访问负数下标。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">solve</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-type">int</span> n,k,x,ans=<span class="hljs-number">0</span>;<br>	tot.<span class="hljs-built_in">clear</span>();<br>	<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld%lld&quot;</span>,&amp;n,&amp;k);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;i++)&#123;<br>		<span class="hljs-built_in">scanf</span>(<span class="hljs-string">&quot;%lld&quot;</span>,&amp;x);<br>		tot[x]++;<br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i:tot)<br>		ans+=<span class="hljs-built_in">min</span>(tot[i.first],tot[k-i.first]);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lld\n&quot;</span>,ans/<span class="hljs-number">2</span>);<br>&#125;<span class="hljs-comment">//是不是比官方题解简单多了</span><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">

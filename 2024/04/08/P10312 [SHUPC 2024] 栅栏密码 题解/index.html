@@ -27,7 +27,7 @@
 <meta property="og:description" content="可以发现，这道题目主要要解决的问题是如何从输入的密文中分出加密之前每行的字母（之后按照 V 形遍历输出明文即可）。 先想到找每一行的规律，但找不出来，于是想到用模拟的方法，按照要求先模拟一遍加密，模拟中记下每个位置对应在行数。 这一部分代码如下： 1234567&#x2F;&#x2F;用sum记录第j行的字符个数for(int i&#x3D;1;i&lt;&#x3D;n;)&#123;    for(int j&#x3D;1;j&lt;&#x3D;h&amp;am">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-08T05:30:00.000Z">
-<meta property="article:modified_time" content="2025-03-09T12:33:48.000Z">
+<meta property="article:modified_time" content="2025-08-15T11:29:09.541Z">
 <meta property="article:author" content="shicj">
 <meta property="article:tag" content="题解">
 <meta name="twitter:card" content="summary_large_image">
@@ -184,6 +184,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/files/" target="_self">
+                <i class="iconfont icon-books"></i>
+                <span>资料库</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -207,7 +219,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/bk1.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -300,12 +312,34 @@
 <p><s>相信已经不需要代码了</s></p>
 <h2 id="Code">Code</h2>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>queue&lt;<span class="hljs-type">char</span>&gt;q[<span class="hljs-number">101</span>];<br><span class="hljs-type">int</span> sum[<span class="hljs-number">101</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>	<span class="hljs-type">int</span> h;<br>	string s;<br>	cin&gt;&gt;h&gt;&gt;s;<br>	<span class="hljs-type">int</span> n=s.<span class="hljs-built_in">size</span>();<br>	s=<span class="hljs-string">&quot; &quot;</span>+s;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;)&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=h&amp;&amp;i&lt;=n;j++,i++)&#123;<br>			sum[j]++;<br>		&#125;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=h<span class="hljs-number">-1</span>;j&gt;=<span class="hljs-number">2</span>&amp;&amp;i&lt;=n;j--,i++)&#123;<br>			sum[j]++;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>,j=<span class="hljs-number">1</span>;i&lt;=h;i++)&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">1</span>;k&lt;=sum[i];k++,j++)&#123;<br>			q[i].<span class="hljs-built_in">push</span>(s[j]);<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;)&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=h&amp;&amp;i&lt;=n;j++,i++)&#123;<br>			cout&lt;&lt;q[j].<span class="hljs-built_in">front</span>();<br>			q[j].<span class="hljs-built_in">pop</span>();<br>		&#125;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=h<span class="hljs-number">-1</span>;j&gt;=<span class="hljs-number">2</span>&amp;&amp;i&lt;=n;j--,i++)&#123;<br>			cout&lt;&lt;q[j].<span class="hljs-built_in">front</span>();<br>			q[j].<span class="hljs-built_in">pop</span>();<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
   
   
     <div class="post-meta">
