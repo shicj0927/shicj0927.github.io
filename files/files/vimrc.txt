@@ -1,0 +1,5 @@
+set nu ru ts=4 sw=4 autoindent cindent smartindent mouse=a 
+set backspace=indent,eol,start 
+set noexpandtab guifont=Consolas::h12
+syntax on
+colorscheme habamax
