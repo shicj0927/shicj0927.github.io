@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./bootstrap-icons.min.css">
+    <script src="./dexie.min.js" defer></script>
+    <script src="./dexie-export-import.js" defer></script>
+    <script src="./data.js" defer></script>
+    <script src="./ui.js" defer></script>
+    <script src="./song-search.js" defer></script>
+    <script src="./settings.js" defer></script>
+    <script src="./download.js" defer></script>
+    <script src="./player.js" defer></script>
+    <script src="./songlists.js" defer></script>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <title>Easy Music</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="toolbar">
+            <div class="buttonbar">
+                <div class="title">
+                    <i class="bi bi-music-note-beamed"></i>
+                    EasyMusic
+                </div>
+                <div class="button" id="settings-btn">设置</div>
+                <div class="button" id="tools-btn">工具</div>
+                <div class="button" id="lyric-search-btn">搜歌词</div>
+                <div class="button" id="help-btn">帮助</div>
+                <div class="button" id="about-btn">关于</div>
+            </div>
+            <div class="right">
+                <div class="button" id="api-btn" style="color:green">API</div>
+                <a style="padding-right: 10px;" id="space">0.0MB</a>
+                <a style="padding-right: 10px;" id="time">10:00</a>
+            </div>
+        </div>
+        <div class="listarea">
+            <div class="songlistlist">
+                <div class="listlisttitle">
+                    歌单列表
+                </div>
+                <div class="listitem" id="search-btn">
+                    搜索歌曲
+                </div>
+                <div class="song-lists" id="song-lists">
+                </div>
+                <div class="listitem" style="color: blue;" id="new-playlist-btn">新建歌单</div>
+            </div>
+            <div class="songlist" id="list-detail-area">
+                <div class="listtitle">
+                    <div id="list-detail-title">
+                    </div>
+                    <div class="right">
+                        <div class="button" id="export">导出</div>
+                        <div class="button" style="color: red;" id="delete">删除</div>
+                    </div>
+                </div>
+                <div id="list-detail-list">
+                </div>
+                <div class="listitem" style="color: blue;" id="list-detail-add-btn">添加歌曲</div>
+            </div>
+            <!-- 弹窗 -->
+            <!-- 搜歌曲 -->
+            <div class="listarea-overlay" id="song-search-overlay">
+                <div class="listarea-modal">
+                    <div class="listarea-modal-header">
+                        <span>搜索歌曲</span>
+                        <span class="close" id="song-search-close">&times;</span>
+                    </div>
+                    <div class="listarea-modal-body">
+                        <input type="text" id="song-search-input" placeholder="输入关键词搜索">
+                        <select id="search-select" style="width: 100%;">
+                            <option value="netease">网易云</option>
+                            <option value="bilibili">哔哩哔哩</option>
+                            <option value="kuwo">酷我</option>
+                            <option value="joox">Joox</option>
+                        </select>
+                        <div id="song-search-btn" class="button">
+                            <center>搜索</center>
+                        </div>
+                        <div id="song-search-results">
+                            <div class="song-search-item">
+                                <div class="songname">由于API特性，可能在一两次重试后才有结果，等待数秒即可</div>
+                            </div>
+                            <!-- 搜索结果会插入到这里 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 新建歌单 -->
+            <div class="listarea-overlay" id="new-playlist-overlay">
+                <div class="listarea-modal">
+                    <div class="listarea-modal-header">
+                        <span>新建歌单</span>
+                        <span class="close" id="new-playlist-close">&times;</span>
+                    </div>
+
+                    <div class="listarea-modal-body">
+                        <input type="text" id="new-playlist-input" placeholder="输入歌单名称">
+                        <div id="new-playlist-ok-btn" class="button">
+                            <center>新建</center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 添加到歌单 -->
+            <div class="listarea-overlay" id="add-to-playlist-overlay">
+                <div class="listarea-modal">
+                    <div class="listarea-modal-header">
+                        <span>添加到歌单</span>
+                        <span class="close" id="add-to-playlist-close">&times;</span>
+                    </div>
+
+                    <div class="listarea-modal-body">
+                        为以下歌曲选择歌单：
+                        <a id="add-to-playlist-songname" style="color:blue"></a>
+                        <select id="add-to-playlist-select" style="width: 100%;"></select>
+                        <div id="add-to-playlist-ok-btn" class="button">
+                            <center>确认</center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lyric-panel">
+            <div class="lyric-toggle" id="lyric-toggle-btn">
+                <i class="bi bi-chevron-up"></i>
+            </div>
+            <div class="lyric-line" id="lyric-1">前一句</div>
+            <div class="lyric-line active" id="lyric-2">暂无歌词</div>
+            <div class="lyric-line" id="lyric-3">后一句</div>
+        </div>
+        <div class="playmenu" id="player">
+            <div class="play-left">
+                <!-- <div class="cover"> -->
+                <img class="cover" src="./favicon.svg" id="player-cover">
+                <!-- </div> -->
+                <div class="info">
+                    <div class="songname" id="player-songname">未播放</div>
+                    <div class="artist" id="player-artist">Artist</div>
+                </div>
+            </div>
+
+            <div class="play-center">
+                <div class="center-controls">
+                    <div class="button" id="player-prev-btn">
+                        <i class="bi bi-skip-backward-fill"></i>
+                    </div>
+                    <div class="button" id="player-ctl-btn">
+                        <i class="bi bi-play-fill"></i>
+                    </div>
+                    <div class="button" id="player-next-btn">
+                        <i class="bi bi-skip-forward-fill"></i>
+                    </div>
+                </div>
+
+                <div class="progressarea">
+                    <span class="time" id="player-time">00:00</span>
+                    <input type="range" min="0" max="100" value="0" id="player-progress-bar">
+                    <span class="time" id="player-duration">00:00</span>
+                </div>
+            </div>
+
+            <div class="play-right">
+                <div class="button" id="player-download-btn">
+                    <i class="bi bi-download"></i>
+                </div>
+                <div class="button" id="player-loopmode-btn">
+                    <i class="bi bi-shuffle"></i>
+                </div>
+            </div>
+        </div>
+        <center>
+            <div class="statusbar">
+                <div class="status">Easy Music By shicj</div>
+            </div>
+        </center>
+        <!-- 弹窗 -->
+        <!-- 设置 -->
+        <div class="modal" id="settings-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>设置</h2>
+                    <span class="close" id="settings-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-item">
+                        <label for="saveInfo-st">存储歌曲信息</label>
+                        <input type="checkbox" id="saveInfo-st" checked disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="saveLyric-st">存储歌词</label>
+                        <input type="checkbox" id="saveLyric-st" checked disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="saveListSong-st">存储歌单歌曲</label>
+                        <input type="checkbox" id="saveListSong-st" checked disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="saveAllSong-st">存储所有播放过的歌曲</label>
+                        <input type="checkbox" id="saveAllSong-st" checked disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="downloadQuality-st">下载质量</label>
+                        <select id="downloadQuality-st">
+                            <option value="28">28 最低</option>
+                            <option value="192">192 省流</option>
+                            <option value="320">320 标准</option>
+                            <option value="740" selected>740 极高</option>
+                            <option value="999">999 无损</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="apiTestF-st">API检测频率</label>
+                        <select id="apiTestF-st">
+                            <option value="1h">每小时</option>
+                            <option value="10min">每10分钟</option>
+                            <option value="1">仅打开时</option>
+                        </select>
+                    </div>
+                    <div class="button">
+                        <center id="save-settings-btn">保存设置</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 工具 -->
+        <div class="modal" id="tools-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>工具</h2>
+                    <span class="close" id="tools-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="button">
+                        <center id="export-all">导出全部数据</center>
+                    </div>
+                    <div class="button">
+                        <center id="import-all">导入数据（自动合并）</center>
+                    </div>
+                    <div class="button">
+                        <center id="import-merge">管理数据</center>
+                    </div>
+                    <div class="button">
+                        <center id="import-overwrite" style="color: red;">导入数据（覆盖）</center>
+                    </div>
+                    <div class="button">
+                        <center id="clear-data" style="color: red;">清除全部数据</center>
+                    </div>
+                    <a style="color:red">此功能仅用于在设备间迁移数据，请不要导入不可信的数据文件，本站未对XSS攻击、js字符串逃逸攻击等页面注入进行拦截，也不对由此产生的后果负责！</a>
+                </div>
+            </div>
+        </div>
+        <!-- 搜歌词 -->
+        <div class="modal" id="lyric-search-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>搜歌词</h2>
+                    <span class="close" id="lyric-search-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="lyric-search-input" placeholder="输入歌词搜索，仅支持下载过的歌曲">
+                    <div id="lyric-search-results">
+                        <div class="lyric-search-item">
+                            <div class="songname">S1</div>
+                        </div>
+                        <div class="lyric-search-item">
+                            <div class="songname">S2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 帮助 -->
+        <div class="modal" id="help-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>帮助</h2>
+                    <span class="close" id="help-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    帮助信息……
+                </div>
+            </div>
+        </div>
+        <!-- 关于 -->
+        <div class="modal" id="about-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>关于</h2>
+                    <span class="close" id="about-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <h3>Easy Music</h3>
+                        <p>作者：shicj</p>
+                        <p>
+                            使用<a href="https://music.gdstudio.xyz" style="color: blue;">
+                                GD音乐台
+                            </a>
+                            API
+                        </p>
+                        <p>
+                            使用
+                            <a href="https://icons.getbootstrap.com/" style="color: blue;">
+                                bootstrap-icons
+                            </a>
+                            图标库
+                        </p>
+                        <p>
+                            使用
+                            <a href="https://dexie.org">
+                                dexie
+                            </a>
+                            数据库
+                        </p>
+                        <p>使用项目请注明出处，侵权必究</p>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <!-- API状态 -->
+        <div class="modal" id="api-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>API状态</h2>
+                    <span class="close" id="api-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div id="api-status">
+                        <div class="api-item">
+                            <div class="api-name">网易云-搜索</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">网易云-下载</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">哔哩哔哩-搜索</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">哔哩哔哩-下载</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">酷我-搜索</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">酷我-下载</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">Joox-搜索</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                        <div class="api-item">
+                            <div class="api-name">Joox-下载</div>
+                            <div class="api-status" style="color: green;">●正常</div>
+                        </div>
+                    </div>
+                    <div class="button" id="api-check-now">
+                        <center>立即检测</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 下载进度显示 -->
+        <!-- bar.style.width = percent + "%"; -->
+        <div class="modal" id="download-progress-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>下载进度</h2>
+                </div>
+                <div class="modal-body">
+                    <div id="download-progress-list">
+                        正在下载：<a id="download-data-name">Song</a>
+
+                        <!-- 进度条区域 -->
+                        <div class="progress-wrapper">
+                            <div class="progress-bar" id="download-progress-bar" style="width:50%;"></div>
+                        </div>
+
+                        <div class="progress-text">
+                            <span id="download-progress-percent">5MB/10MB 50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 空白提示框 -->
+        <div class="modal" id="alart-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="alart-header">提示</h2>
+                    <span class="close" id="alart-close">&times;</span>
+                </div>
+                <div class="modal-body" id="alart-body">
+                    <div id="alart-content">这里是提示内容</div>
+                    <div class="button" id="alart-ok-btn">
+                        <center>确定</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

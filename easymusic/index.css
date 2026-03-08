@@ -1,0 +1,579 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#app {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.title {
+    display: inline-block;
+    padding: 5px 16px;
+}
+
+.button {
+    font-size: medium;
+    display: inline-block;
+    padding: 5px 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background-color: #f0f0f0;
+}
+
+.button:hover {
+    background-color: #d0d0d0;
+}
+
+.button:active {
+    background-color: #f0f0f0;
+}
+
+.listarea {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    position: relative;
+}
+
+.songlistlist {
+    background-color: #e0e0e0;
+    width: 200px;
+    /* border-right: #a0a0a0 5px solid; */
+    overflow: auto;
+}
+
+.songlist {
+    flex: 7;
+    overflow: auto;
+}
+
+.playmenu {
+    height: 80px;
+    display: flex;
+    background-color: #f0f0f0;
+}
+
+.listlisttitle {
+    height: 30px;
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: black 1px solid;
+}
+
+.listtitle {
+    height: 30px;
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: black 1px solid;
+    display: flex;
+    align-items: center;
+}
+
+.listitem {
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.listitem:hover {
+    background-color: #d0d0d0;
+}
+
+.listitem:active {
+    background-color: white;
+}
+
+input {
+    display: inline-block;
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #d0d0d0;
+    background-color: white;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+}
+
+input:hover {
+    border-color: #a0a0a0;
+}
+
+input:focus {
+    border-color: #808080;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+.right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+.playmenu {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+/* 三段式布局 */
+.play-left,
+.play-center,
+.play-right {
+    display: flex;
+    align-items: center;
+}
+
+/* 左侧 */
+.play-left {
+    width: 250px;
+    gap: 10px;
+}
+
+.cover {
+    width: 50px;
+    height: 50px;
+    background-color: #d0d0d0;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.songname {
+    font-size: 14px;
+}
+
+.artist {
+    font-size: 12px;
+    color: #808080;
+}
+
+/* 中间 */
+.play-center {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.center-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.progressarea {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.time {
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+}
+
+/* 右侧 */
+.play-right {
+    width: 150px;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.lyric-panel {
+    position: relative;
+
+    padding: 15px 20px;
+    background-color: #fafafa;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 6px;
+
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.lyric-line {
+    display: none;
+    font-size: 16px;
+    height: 24px;
+    color: #808080;
+    transition: all 0.3s ease;
+}
+
+.lyric-line.active {
+    display: block;
+    font-size: 18px;
+    height: 24px;
+    color: #000;
+}
+
+.lyric-line.show {
+    display: block;
+}
+
+.lyric-toggle {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #808080;
+    padding: 4px;
+}
+
+.lyric-toggle:hover {
+    color: black;
+}
+
+/* ===== Modal 外层遮罩 ===== */
+.modal {
+    display: none;
+    /* 默认隐藏 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+/* 控制显示时加这个类 */
+.modal.show {
+    display: flex;
+}
+
+/* ===== 弹窗主体 ===== */
+.modal-content {
+    width: 420px;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Header ===== */
+.modal-header {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 15px;
+    border-bottom: 1px solid #d0d0d0;
+    background-color: #f0f0f0;
+}
+
+.modal-header h2 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: normal;
+}
+
+/* 关闭按钮 */
+.close {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    color: #808080;
+    transition: all 0.15s ease;
+}
+
+.close:hover {
+    background-color: #d0d0d0;
+    color: black;
+}
+
+/* ===== Body ===== */
+.modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* 每一项设置 */
+.setting-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: all 0.15s ease;
+}
+
+.setting-item label {
+    font-size: 14px;
+    color: #333;
+}
+
+/* select 样式统一 */
+select {
+    width: 160px;
+    padding: 6px 10px;
+    border: 1px solid #d0d0d0;
+    background-color: white;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+}
+
+select:hover {
+    border-color: #a0a0a0;
+}
+
+select:focus {
+    border-color: #808080;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+}
+
+/* checkbox 微调 */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+/* ===== 歌词搜索结果区域 ===== */
+#lyric-search-results {
+    display: flex;
+    flex-direction: column;
+
+    height: 240px;
+    /* 固定高度 */
+    overflow-y: auto;
+    /* 超出滚动 */
+
+    border: 1px solid #d0d0d0;
+    background-color: #fafafa;
+}
+
+/* 每一条结果 */
+.lyric-search-item {
+    height: 40px;
+    /* 固定高度 */
+    min-height: 40px;
+    /* 防止被压缩 */
+    max-height: 40px;
+    /* 防止被撑开 */
+
+    flex: 0 0 40px;
+    /* 在 flex 容器里固定尺寸 */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 12px;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+/* hover 效果和 listitem 保持一致 */
+.lyric-search-item:hover {
+    background-color: #e0e0e0;
+}
+
+.lyric-search-item:active {
+    background-color: #ffffff;
+}
+
+/* 歌名区域 */
+.lyric-search-item .songname {
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== API 状态区域 ===== */
+#api-status {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d0d0d0;
+    background-color: #fafafa;
+}
+
+.api-item {
+    height: 38px;
+    min-height: 38px;
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 15px;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+}
+
+.api-item:last-child {
+    border-bottom: none;
+}
+
+.api-item:hover {
+    background-color: #e0e0e0;
+}
+
+.api-name {
+    font-size: 14px;
+    color: #333;
+}
+
+.listarea-overlay {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.3);
+
+    z-index: 50;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.listarea-overlay.show {
+    display: flex;
+}
+
+.listarea-modal {
+    width: 500px;
+    max-height: 80%;
+
+    background: #ffffff;
+    border: 1px solid #d0d0d0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.listarea-modal-header {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 15px;
+    border-bottom: 1px solid #d0d0d0;
+    background: #f0f0f0;
+}
+
+.listarea-modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#song-search-results {
+    height: 240px;
+    overflow-y: auto;
+
+    border: 1px solid #d0d0d0;
+    background: #fafafa;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.song-search-item {
+    min-height: 40px;
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+
+    border-bottom: 1px solid #d0d0d0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.song-search-item:hover {
+    background: #e0e0e0;
+}
+
+/* ===== 进度条外框 ===== */
+.progress-wrapper {
+    width: 100%;
+    height: 16px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+/* ===== 进度条本体 ===== */
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    transition: width 0.3s ease;
+}
+
+/* ===== 百分比文字 ===== */
+.progress-text {
+    margin-top: 8px;
+    text-align: right;
+    font-size: 14px;
+    color: #333;
+}
