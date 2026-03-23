@@ -298,6 +298,189 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2024/04/08/P10314%20%5BSHUPC%202024%5D%20%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/" target="_self">
+          P10314 [SHUPC 2024] 函数 题解
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/04/08/P10314%20%5BSHUPC%202024%5D%20%E5%87%BD%E6%95%B0%20%E9%A2%98%E8%A7%A3/" target="_self">
+        <div>
+          直接处理即可。 小问题：math 库中没有 cot⁡\cotcot 函数。 解决：用公式 cot⁡(x)=tan⁡(π2−x)\cot(x)=\tan(\dfrac{\pi}{2}-x)cot(x)=tan(2π​−x)。 定义 cot⁡\cotcot 函数： 1double cot(double x)&#123;return tan(pi/2-x);&#125; 输出： 1printf(&quo
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-04-08 13:38" pubdate>
+              2024-04-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%A2%98%E8%A7%A3/">#题解</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/04/08/P10312%20%5BSHUPC%202024%5D%20%E6%A0%85%E6%A0%8F%E5%AF%86%E7%A0%81%20%E9%A2%98%E8%A7%A3/" target="_self">
+          P10312 [SHUPC 2024] 栅栏密码 题解
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/04/08/P10312%20%5BSHUPC%202024%5D%20%E6%A0%85%E6%A0%8F%E5%AF%86%E7%A0%81%20%E9%A2%98%E8%A7%A3/" target="_self">
+        <div>
+          可以发现，这道题目主要要解决的问题是如何从输入的密文中分出加密之前每行的字母（之后按照 V 形遍历输出明文即可）。 先想到找每一行的规律，但找不出来，于是想到用模拟的方法，按照要求先模拟一遍加密，模拟中记下每个位置对应在行数。 这一部分代码如下： 1234567//用sum记录第j行的字符个数for(int i=1;i&lt;=n;)&#123;    for(int j=1;j&lt;=h&am
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-04-08 13:30" pubdate>
+              2024-04-08
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%A2%98%E8%A7%A3/">#题解</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/02/21/CF711E%20ZS%20and%20The%20Birthday%20Paradox%20%E9%A2%98%E8%A7%A3/" target="_self">
+          CF711E ZS and The Birthday Paradox 题解
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/02/21/CF711E%20ZS%20and%20The%20Birthday%20Paradox%20%E9%A2%98%E8%A7%A3/" target="_self">
+        <div>
+          题意 求一年有 2n2^n2n 天，mmm 个人出现两人生日相同的概率。答案输出对 106+310^6+3106+3 的取模分子和分母（约分后）。   思路   首先想不进行优化的数学计算方法，求出两人生日相同的概率不容易，但我们可以求出所有人生日不同的概率（也就是排列数除以所有情况数），再用 111 减掉，即得公式 p=1−A2nm2nmp=1-\frac{A_{2^n}^{m}}{2^{n
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-02-21 09:21" pubdate>
+              2024-02-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%A2%98%E8%A7%A3/">#题解</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2024/02/19/CF1916F%20Group%20Division%20%E9%A2%98%E8%A7%A3/" target="_self">
           CF1916F Group Division 题解
         </a>
