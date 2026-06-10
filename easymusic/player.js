@@ -144,6 +144,44 @@ function on_play_button_click() {
 
 document.getElementById("player-ctl-btn").addEventListener("click", on_play_button_click);
 
+function on_prev_button_click() {
+    if (!playlist || playlist.length === 0) return;
+    if (playlist.length === 1) {
+        audio.currentTime = 0;
+        audio.play();
+        player_status = "playing";
+        update_play_button();
+        return;
+    }
+    now_id = (now_id - 1 + playlist.length) % playlist.length;
+    now_sid = playlist[now_id].sid;
+    DBgetSongInfo(now_sid).then(song => {
+        song.id = parseSid(song.sid).id;
+        download_song(encodeURIComponent(JSON.stringify(song)), play_song_list_mode);
+    });
+}
+
+document.getElementById("player-prev-btn").addEventListener("click", on_prev_button_click);
+
+function on_next_button_click() {
+    if (!playlist || playlist.length === 0) return;
+    if (playlist.length === 1) {
+        audio.currentTime = 0;
+        audio.play();
+        player_status = "playing";
+        update_play_button();
+        return;
+    }
+    now_id = (now_id + 1) % playlist.length;
+    now_sid = playlist[now_id].sid;
+    DBgetSongInfo(now_sid).then(song => {
+        song.id = parseSid(song.sid).id;
+        download_song(encodeURIComponent(JSON.stringify(song)), play_song_list_mode);
+    });
+}
+
+document.getElementById("player-next-btn").addEventListener("click", on_next_button_click);
+
 function update_progress() {
     const progressBar = document.getElementById("player-progress-bar");
     const currentTime = audio.currentTime;

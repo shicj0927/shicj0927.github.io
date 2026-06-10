@@ -18,8 +18,11 @@ async function load_song_lists() {
             load_list_detail(songList.id);
         };
         list_item.innerHTML = `${songList.name}
-            <div class="right" style="color:red;">
-                <a href="javascript:;" onclick="delete_song_list(${songList.id})">
+            <div class="right">
+                <a href="javascript:;" onclick="copy_song_list_window(${songList.id})">
+                    <i class="bi bi-copy"></i>
+                </a>
+                <a href="javascript:;" onclick="delete_song_list(${songList.id})" style="color:red;">
                     <i class="bi bi-x-lg"></i>
                 </a>
                 <a onclick="sure_delete_song_list(${songList.id})" style="color:red;display:none;" id="sure-delete-btn-${songList.id}">
@@ -33,14 +36,22 @@ async function load_song_lists() {
 
 load_song_lists();
 
-function new_song_list() {
+async function new_song_list() {
     list_name = document.getElementById("new-playlist-input").value.trim();
+    let list = await DBgetSongLists();
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].name === list_name) {
+            alert("歌单已存在！");
+            return;
+        }
+    }
     if (list_name) {
         DBnewSongList(list_name);
         load_song_lists();
         document.getElementById("new-playlist-input").value = "";
         document.getElementById("new-playlist-overlay").classList.remove("show");
     }
+    ODBuploadLoaclData();
 }
 
 document.getElementById("new-playlist-ok-btn").addEventListener("click", new_song_list);
@@ -65,6 +76,33 @@ async function sure_delete_song_list(list_id) {
         DBsetSetting("lastSongList", -1);
         init_list_detail();
     }
+    ODBuploadLoaclData();
+}
+
+async function copy_song_list_window(list_id) {
+    document.getElementById("copy-playlist-overlay").classList.add("show");
+    document.getElementById("copy-playlist-input").value = "";
+    document.getElementById("copy-playlist-ok-btn").onclick = () => {
+        copy_song_list(list_id);
+    }
+}
+
+async function copy_song_list(list_id) {
+    list_name = document.getElementById("copy-playlist-input").value.trim();
+    let list = await DBgetSongLists();
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].name === list_name) {
+            alert("歌单已存在！");
+            return;
+        }
+    }
+    if (list_name) {
+        await DBcopySongList(list_id, list_name);
+        document.getElementById("copy-playlist-input").value = "";
+        document.getElementById("copy-playlist-overlay").classList.remove("show");
+        load_song_lists();
+    }
+    ODBuploadLoaclData();
 }
 
 function init_list_detail() {
@@ -78,6 +116,11 @@ init_list_detail();
 async function load_list_detail(list_id) {
     console.log("加载歌单", list_id)
     list = await DBgetSongList(list_id);
+    if (!list) {
+        console.error("List not found", list_id);
+        init_list_detail();
+        return;
+    }
     document.getElementById("list-detail-title").innerText = list.name;
     document.getElementById("list-detail-list").innerHTML = "";
     document.getElementById("list-detail-add-btn").style.display = "block";
@@ -100,9 +143,13 @@ async function load_list_detail(list_id) {
     console.log(list);
     for (let i = 0; i < list.data.length; i++) {
         song_info = list.data[i];
-        song = await DBgetSongInfo(song_info.sid);
+        let song = await DBgetSongInfo(song_info.sid);
         let list_item = document.createElement("div");
         list_item.className = "listitem";
+        console.log(song_info.sid);
+        song = await DBgetSongInfo(song_info.sid);
+        const safeSid = song_info.sid;
+        console.log("song =", song);
         list_item.innerHTML = `${song_info.name}
             <div class="right">
                 <a href="javascript:;" id="play" onclick="play_list(${list_id},${i})">
@@ -111,7 +158,7 @@ async function load_list_detail(list_id) {
                 <a href="javascript:;" id="download" onclick="download_song('${encodeURIComponent(JSON.stringify(song))}')">
                     <i class="bi bi-download"></i>
                 </a>
-                <a href="javascript:;" style="color: red;" id="remove" onclick="remove_from_list(${list_id},'${song.sid}')">
+                <a href="javascript:;" style="color: red;" id="remove" onclick="remove_from_list(${list_id},'${safeSid}')">
                     <i class="bi bi-x-lg"></i>
                 </a>
             </div>
@@ -168,11 +215,13 @@ async function add_to_list(song, list_id = 1) {
     document.getElementById("add-to-playlist-overlay").classList.add("show");
     sid_to_playlist = sid;
     songname_to_playlist = song.name + " - " + song.artist.join(" / ");
+    ODBuploadLoaclData();
 }
 
 async function remove_from_list(list_id, sid) {
     DBremoveFromSongList(list_id, sid);
     load_list_detail(list_id);
+    ODBuploadLoaclData();
 }
 
 async function add_ok() {
@@ -181,6 +230,7 @@ async function add_ok() {
         await DBinsertToSongList(parseInt(list_id), sid_to_playlist, songname_to_playlist);
         document.getElementById("add-to-playlist-overlay").classList.remove("show");
         load_list_detail(parseInt(list_id));
+        ODBuploadLoaclData();
     }
 }
 

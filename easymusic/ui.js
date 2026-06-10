@@ -22,21 +22,21 @@ document.getElementById('tools-btn').addEventListener('click', () => {
     showModal('tools-modal');
 });
 
-document.getElementById('lyric-search-btn').addEventListener('click', () => {
-    showModal('lyric-search-modal');
-});
+// document.getElementById('lyric-search-btn').addEventListener('click', () => {
+//     showModal('lyric-search-modal');
+// });
 
-document.getElementById('help-btn').addEventListener('click', () => {
-    showModal('help-modal');
-});
+// document.getElementById('help-btn').addEventListener('click', () => {
+//     showModal('help-modal');
+// });
 
 document.getElementById('about-btn').addEventListener('click', () => {
     showModal('about-modal');
 });
 
-document.getElementById('api-btn').addEventListener('click', () => {
-    showModal('api-modal');
-});
+// document.getElementById('api-btn').addEventListener('click', () => {
+//     showModal('api-modal');
+// });
 
 document.getElementById('search-btn').addEventListener('click', () => {
     search_insert_to_list_id = -1;
@@ -45,6 +45,41 @@ document.getElementById('search-btn').addEventListener('click', () => {
 
 document.getElementById('new-playlist-btn').addEventListener('click', () => {
     showModal('new-playlist-overlay');
+});
+
+document.getElementById("db-export-all-btn").addEventListener('click', () => {
+    exportDB();
+});
+
+document.getElementById("db-export-meta-btn").addEventListener('click', () => {
+    exportDB(["songdatas"]);
+});
+
+document.getElementById("db-import-overwrite-btn").addEventListener('click', () => {
+    importDB();
+});
+
+document.getElementById("db-clear-btn").addEventListener('click', () => {
+    resetDB();
+});
+
+document.getElementById("user-btn").addEventListener('click', () => {
+    if (loginedIn) {
+        logout();
+    }
+    else {
+        showModal('login-modal');
+    }
+});
+
+document.getElementById("reg-btn").addEventListener('click', () => {
+    showModal('reg-modal');
+});
+
+document.getElementById("username-btn").addEventListener('click', () => {
+    if (loginedIn) {
+        showModal('reset-password-modal');
+    }
 });
 
 // 绑定关闭事件
@@ -81,6 +116,10 @@ document.getElementById('new-playlist-close').addEventListener('click', () => {
     hideModal('new-playlist-overlay');
 });
 
+document.getElementById('copy-playlist-close').addEventListener('click', () => {
+    hideModal('copy-playlist-overlay');
+});
+
 document.getElementById('alart-close').addEventListener('click', () => {
     hideModal('alart-modal');
 });
@@ -89,7 +128,17 @@ document.getElementById('add-to-playlist-close').addEventListener('click', () =>
     hideModal('add-to-playlist-overlay');
 });
 
-document.getElementById("")
+document.getElementById("login-close").addEventListener('click', () => {
+    hideModal('login-modal');
+});
+
+document.getElementById("reg-close").addEventListener('click', () => {
+    hideModal('reg-modal');
+});
+
+document.getElementById("reset-password-close").addEventListener('click', () => {
+    hideModal('reset-password-modal');
+});
 
 // 按下Esc键关闭所有模态框
 
@@ -103,8 +152,12 @@ document.addEventListener('keydown', (e) => {
         hideModal('api-modal');
         hideModal('song-search-overlay');
         hideModal('new-playlist-overlay');
+        hideModal('copy-playlist-overlay');
         hideModal('alart-modal');
         hideModal('add-to-playlist-overlay');
+        hideModal('login-modal');
+        hideModal('reg-modal');
+        hideModal('reset-password-modal');
     }
 });
 

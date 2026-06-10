@@ -16,6 +16,7 @@ document.getElementById("save-settings-btn").addEventListener("click", async () 
     await DBsetSetting("downloadQuality", document.getElementById("downloadQuality-st").value);
     await DBsetSetting("apiTestF", document.getElementById("apiTestF-st").value);
     document.getElementById("settings-modal").classList.remove("show");
+    ODBuploadLoaclData();
 });
 
 window.addEventListener("DOMContentLoaded", loadSettings);

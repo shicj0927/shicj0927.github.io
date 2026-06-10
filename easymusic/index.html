@@ -5,8 +5,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="./index.css">
     <link rel="stylesheet" href="./bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="./crypto-js.min.js" defer></script>
     <script src="./dexie.min.js" defer></script>
-    <script src="./dexie-export-import.js" defer></script>
+    <script src="./streamsaver/StreamSaver.min.js" defer></script>
+    <script src="./idbbackup.js" defer></script>
     <script src="./data.js" defer></script>
     <script src="./ui.js" defer></script>
     <script src="./song-search.js" defer></script>
@@ -14,6 +17,27 @@
     <script src="./download.js" defer></script>
     <script src="./player.js" defer></script>
     <script src="./songlists.js" defer></script>
+    <script src="./db.js" defer></script>
+    <script src="./auth.js" defer></script>
+    <script src="./onlinedb.js" defer></script>
+    <script src="./api.js" defer></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(error => {
+                    console.log('SW registration failed: ', error);
+                });
+            });
+        }
+    </script>
+
+    <script defer>
+        window.addEventListener("DOMContentLoaded", () => {
+            streamSaver.mitm = "./streamsaver/mitm.html";
+        });
+    </script>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <title>Easy Music</title>
 </head>
@@ -22,18 +46,21 @@
     <div id="app">
         <div class="toolbar">
             <div class="buttonbar">
-                <div class="title">
+                <div class="title" id="page-title">
                     <i class="bi bi-music-note-beamed"></i>
                     EasyMusic
                 </div>
                 <div class="button" id="settings-btn">设置</div>
-                <div class="button" id="tools-btn">工具</div>
-                <div class="button" id="lyric-search-btn">搜歌词</div>
-                <div class="button" id="help-btn">帮助</div>
+                <div class="button" id="tools-btn">数据</div>
+                <!-- <div class="button" id="lyric-search-btn">搜歌词</div> -->
+                <!-- <div class="button" id="help-btn">帮助</div> -->
                 <div class="button" id="about-btn">关于</div>
             </div>
             <div class="right">
-                <div class="button" id="api-btn" style="color:green">API</div>
+                <!-- <div class="button" id="api-btn" style="color:green">API</div> -->
+                <div class="button" id="username-btn">未登录</div>
+                <div class="button" id="user-btn" style="color: green;">登录</div>
+                <div class="button" id="reg-btn" style="color: blue;">注册</div>
                 <a style="padding-right: 10px;" id="space">0.0MB</a>
                 <a style="padding-right: 10px;" id="time">10:00</a>
             </div>
@@ -55,8 +82,8 @@
                     <div id="list-detail-title">
                     </div>
                     <div class="right">
-                        <div class="button" id="export">导出</div>
-                        <div class="button" style="color: red;" id="delete">删除</div>
+                        <!-- <div class="button" id="export">导出</div>
+                        <div class="button" style="color: red;" id="delete">删除</div> -->
                     </div>
                 </div>
                 <div id="list-detail-list">
@@ -75,9 +102,9 @@
                         <input type="text" id="song-search-input" placeholder="输入关键词搜索">
                         <select id="search-select" style="width: 100%;">
                             <option value="netease">网易云</option>
-                            <option value="bilibili">哔哩哔哩</option>
+                            <!-- <option value="bilibili">哔哩哔哩</option>
                             <option value="kuwo">酷我</option>
-                            <option value="joox">Joox</option>
+                            <option value="joox">Joox</option> -->
                         </select>
                         <div id="song-search-btn" class="button">
                             <center>搜索</center>
@@ -103,6 +130,22 @@
                         <input type="text" id="new-playlist-input" placeholder="输入歌单名称">
                         <div id="new-playlist-ok-btn" class="button">
                             <center>新建</center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 复制歌单 -->
+            <div class="listarea-overlay" id="copy-playlist-overlay">
+                <div class="listarea-modal">
+                    <div class="listarea-modal-header">
+                        <span>复制歌单</span>
+                        <span class="close" id="copy-playlist-close">&times;</span>
+                    </div>
+
+                    <div class="listarea-modal-body">
+                        <input type="text" id="copy-playlist-input" placeholder="输入歌单名称">
+                        <div id="copy-playlist-ok-btn" class="button">
+                            <center>复制</center>
                         </div>
                     </div>
                 </div>
@@ -170,7 +213,7 @@
                     <i class="bi bi-download"></i>
                 </div>
                 <div class="button" id="player-loopmode-btn">
-                    <i class="bi bi-shuffle"></i>
+                    <i class="bi bi-list-ol"></i>
                 </div>
             </div>
         </div>
@@ -232,26 +275,95 @@
         <div class="modal" id="tools-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>工具</h2>
+                    <h2>数据</h2>
                     <span class="close" id="tools-close">&times;</span>
                 </div>
                 <div class="modal-body">
                     <div class="button">
-                        <center id="export-all">导出全部数据</center>
+                        <center id="db-export-all-btn">导出全部数据</center>
                     </div>
                     <div class="button">
-                        <center id="import-all">导入数据（自动合并）</center>
+                        <center id="db-export-meta-btn">导出元数据</center>
+                    </div>
+                    <!-- <div class="button">
+                        <center id="db-import-all-btn">导入数据（自动合并）</center>
                     </div>
                     <div class="button">
-                        <center id="import-merge">管理数据</center>
+                        <center id="db-import-merge-btn">管理数据</center>
+                    </div> -->
+                    <div class="button">
+                        <center id="db-import-overwrite-btn" style="color: red;">导入数据（覆盖）</center>
                     </div>
                     <div class="button">
-                        <center id="import-overwrite" style="color: red;">导入数据（覆盖）</center>
-                    </div>
-                    <div class="button">
-                        <center id="clear-data" style="color: red;">清除全部数据</center>
+                        <center id="db-clear-btn" style="color: red;">清除全部数据</center>
                     </div>
                     <a style="color:red">此功能仅用于在设备间迁移数据，请不要导入不可信的数据文件，本站未对XSS攻击、js字符串逃逸攻击等页面注入进行拦截，也不对由此产生的后果负责！</a>
+                </div>
+            </div>
+        </div>
+        <!-- 登录框 -->
+        <div class="modal" id="login-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>登录</h2>
+                    <span class="close" id="login-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="login-username" placeholder="邮箱">
+                    <input type="password" id="login-password" placeholder="密码">
+                    <div id="login-ok-btn" class="button">
+                        <center>登录</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 注册框 -->
+        <div class="modal" id="reg-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>注册</h2>
+                    <span class="close" id="reg-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="reg-username" placeholder="邮箱">
+                    <input type="password" id="reg-password" placeholder="密码">
+                    <div id="reg-ok-btn" class="button">
+                        <center>注册</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 设置用户名 -->
+        <div class="modal" id="set-nickname-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>设置用户名</h2>
+                    <!-- <span class="close" id="set-nickname-close">&times;</span> -->
+                </div>
+                <div class="modal-body">
+                    恭喜！账号验证成功！</br>
+                    现在请设置用户名，系统将会自动同步数据，完成后即可使用
+                    <input type="text" id="set-nickname" placeholder="用户名">
+                    <button id="set-nickname-ok-btn" class="button">
+                        <center>设置</center>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 修改密码框 -->
+        <div class="modal" id="reset-password-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>修改密码</h2>
+                    <span class="close" id="reset-password-close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <input type="password" id="reset-old-password" placeholder="旧密码">
+                    <input type="password" id="reset-new-password" placeholder="新密码">
+                    <input type="password" id="reset-confirm-password" placeholder="确认新密码">
+                    <div id="reset-ok-btn" class="button">
+                        <center>修改</center>
+                    </div>
                 </div>
             </div>
         </div>
@@ -313,10 +425,10 @@
                         </p>
                         <p>
                             使用
-                            <a href="https://dexie.org">
+                            <a href="https://dexie.org" style="color: blue;">
                                 dexie
                             </a>
-                            数据库
+                            处理数据库
                         </p>
                         <p>使用项目请注明出处，侵权必究</p>
                     </center>
@@ -391,6 +503,70 @@
                             <span id="download-progress-percent">5MB/10MB 50%</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- 数据库操作进度显示 -->
+        <!-- bar.style.width = percent + "%"; -->
+        <div class="modal" id="db-progress-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>操作数据库</h2>
+                </div>
+                <div class="modal-body">
+                    <div id="db-progress-list">
+                        执行操作：<a id="db-op-name"></a>
+
+                        <!-- 进度条区域 -->
+                        <div class="progress-wrapper">
+                            <div class="progress-bar" id="db-progress-bar" style="width:50%; background:#87CEEB"></div>
+                        </div>
+
+                        <div class="progress-text">
+                            <span id="db-progress-percent">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 数据同步确认 -->
+        <div class="modal" id="sync-confirm-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>数据同步</h2>
+                    <!-- <span class="close" id="sync-confirm-close">&times;</span> -->
+                </div>
+                <div class="modal-body">
+                    <div id="sync-confirm-content">
+                        服务器上有与本地不同的数据，如何处理？</br>
+                        <a style="color:red">合并为歌单级合并，无法合并歌单内容；<br>上传选项将覆盖线上的数据，下载选项将覆盖本地的数据</a>
+                    </div>
+                    <div class="button" id="sync-confirm-merge-down-btn" style="color: green;">
+                        <center>合并（下载）</center>
+                    </div>
+                    <div class="button" id="sync-confirm-merge-up-btn" style="color: green;">
+                        <center>合并（上传）</center>
+                    </div>
+                    <div class="button" id="sync-confirm-overwrite-down-btn" style="color: red;">
+                        <center>覆盖（下载）</center>
+                    </div>
+                    <div class="button" id="sync-confirm-overwrite-up-btn" style="color: red;">
+                        <center>覆盖（上传）</center>
+                    </div>
+                    <div class="button" id="sync-confirm-logout-btn">
+                        <center>登出</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 等待 -->
+        <div class="modal" id="wait-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="alart-header">请稍候</h2>
+                </div>
+                <div class="modal-body" id="alart-body">
+                    <div id="wait-content">请稍候……</div>
                 </div>
             </div>
         </div>

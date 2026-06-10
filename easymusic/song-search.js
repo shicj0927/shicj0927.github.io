@@ -4,7 +4,7 @@ async function song_search(event, songlist = search_insert_to_list_id, count = 1
     console.log("正在搜索歌曲，尝试第" + count + "次……");
     keyword = document.getElementById("song-search-input").value;
     source = document.getElementById("search-select").value;
-    result = await fetch("https://music-api.gdstudio.xyz/api.php?types=search&source=" + source + "&name=" + keyword + "&count=20&pages=1");
+    result = await fetch("https://music-api.gdstudio.xyz/api.php?types=search&source=" + source + "&name=" + keyword + "&count=50&pages=1");
     if (result.status == 200) {
         data = await result.json();
         console.log(data);

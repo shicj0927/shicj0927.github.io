@@ -36,6 +36,12 @@ async function initDB() {
     }
 }
 
+async function resetDB() {
+    await Dexie.delete("MusicDB");
+    await initDB();
+    location.reload();
+}
+
 initDB();
 
 function parseSid(str) {
@@ -61,6 +67,10 @@ async function DBsetSetting(key, value) {
     await db.settings.put({ key, value });
 }
 
+async function DBgetSettings() {
+    return await db.settings.toArray();
+}
+
 async function DBgetSongInfo(sid) {
     return await db.songs.get(sid);
 }
@@ -73,6 +83,14 @@ async function DBgetSongUrl(sid, quality) {
     const urlData = await db.songurl.get(sid);
     if (urlData && urlData["br" + quality]) {
         return urlData["br" + quality];
+    }
+    else if (urlData) {
+        const qualities = [999, 740, 320, 192, 28];
+        for (const q of qualities) {
+            if (urlData["br" + q]) {
+                return urlData["br" + q];
+            }
+        }
     }
     return null;
 }
@@ -135,6 +153,12 @@ async function DBnewSongList(name) {
     await db.songlists.add({ name, data: [] });
 }
 
+async function DBcopySongList(id, newName) {
+    const list = await db.songlists.get(id);
+    if (!list) return;
+    await db.songlists.add({ name: newName, data: list.data });
+}
+
 async function DBgetSongLists() {
     return await db.songlists.toArray();
 }
@@ -179,6 +203,39 @@ async function DBclearAllData() {
     await db.songs.clear();
     await db.songdatas.clear();
     await db.songlists.clear();
+}
+
+async function DBoverwriteSongLists(songLists) {
+    await db.songlists.clear();
+    for (const list of songLists) {
+        await db.songlists.add(list);
+    }
+}
+
+async function DBoverwriteSettings(settings) {
+    await db.settings.clear();
+    for (const setting of settings) {
+        await db.settings.put(setting);
+    }
+}
+
+async function DBoverwriteSongs(songs) {
+    await db.songs.clear();
+    for (const song of songs) {
+        await db.songs.put(song);
+    }
+}
+
+async function DBaddSongLists(songLists) {
+    for (const list of songLists) {
+        await db.songlists.add(list);
+    }
+}
+
+async function DBaddSongs(songs) {
+    for (const song of songs) {
+        await db.songs.put(song);
+    }
 }
 
 async function DBgetUsedSize() {
