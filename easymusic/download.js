@@ -37,22 +37,13 @@ async function download_song(song, onBlob, force = false) {
     nameEl.innerText = savename;
     bar.style.width = "0%";
     percentText.innerText = "准备下载...";
-    download_url = "";
+    let download_url = "";
     try {
-        const br = await DBgetSetting("downloadQuality");
-        const apiRes = await fetch(
-            "https://music-api.gdstudio.xyz/api.php?types=url&id="
-            + id + "&source=" + source + "&br=" + br
-        );
-        if (apiRes.status !== 200) {
-            throw new Error("解析失败，状态码：" + apiRes.status);
+        const br = await DBgetSetting("downloadQuality")
+        if (source == "netease") {
+            download_url = await APIneGetUrl(id, br);
         }
-        console.log("API响应:", apiRes);
-        const data = await apiRes.json();
-        console.log("API数据:", data);
-        download_url = data.url;
-        // const data = await apiRes.json();
-        const response = await fetch(data.url);
+        const response = await fetch(download_url);
         const contentLength = response.headers.get("Content-Length");
         if (!contentLength) {
             percentText.innerText = "无法获取文件大小";
